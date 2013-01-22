@@ -1,0 +1,116 @@
+<html>
+<head>
+
+<title>SF Etsy 2013 Zoo Calendar</title>
+
+<style>
+
+.artwork-picker {
+display:inline-block;
+margin: 10px;
+border:1px solid black;
+}
+
+.calendar-page {
+width: 400px;
+margin: 20px;
+border:2px solid black;
+}
+</style>
+
+<script>
+
+function artwork(flickr_url, thumb_url, artist_name, artist_link){
+  this.flickr_url = flickr_url;
+  this.thumb_url = thumb_url;
+  this.artist_name = artist_name;
+  this.artist_link = artist_link;
+}
+
+var ARTWORKS = [
+new artwork("http://www.flickr.com/photos/evencrochets/8404763296","http://farm9.staticflickr.com/8196/8404763296_c5d277bbd0_q.jpg","Imelda Jiminez","http://www.sunsetshutterbug.etsy.com"),
+new artwork("http://www.flickr.com/photos/evencrochets/8403671239","http://farm9.staticflickr.com/8324/8403671239_a1b2f939c8_q.jpg","Danielle Broder","http://www.therecoverie.etsy.com"),
+new artwork("http://www.flickr.com/photos/evencrochets/8404807262","http://farm9.staticflickr.com/8491/8404807262_42124c03f9_q.jpg","Adam Chang","http://www.theleistand.etsy.com"),
+new artwork("http://www.flickr.com/photos/evencrochets/8404763838","http://farm9.staticflickr.com/8470/8404763838_cb0414dcaa_q.jpg","Frances Marin","http://www.francesmarin.etsy.com"),
+new artwork("http://www.flickr.com/photos/evencrochets/8403667165","http://farm9.staticflickr.com/8466/8403667165_74579fe10b_q.jpg","Tatiana and Fedor","http://www.treesandfaces.etsy.com"),
+new artwork("http://www.flickr.com/photos/evencrochets/8404761028","http://farm9.staticflickr.com/8195/8404761028_af719386eb_q.jpg","Suhita Shirodkar","http://www.sketchaway.etsy.com"),
+new artwork("http://www.flickr.com/photos/evencrochets/8404766218","http://farm9.staticflickr.com/8492/8404766218_d25787ac3e_q.jpg","Alexander Parker","http://www.buyalex.etsy.com"),
+new artwork("http://www.flickr.com/photos/evencrochets/8404763132","http://farm9.staticflickr.com/8094/8404763132_11cbc66ccc_q.jpg","Jennifer (Jeng) Reyes","http://www.inkbyjeng.etsy.com"),
+new artwork("http://www.flickr.com/photos/evencrochets/8403665721","http://farm9.staticflickr.com/8051/8403665721_7c0f16ecb1_q.jpg","Yulia Avgustinovich","http://www.augustartstudio.etsy.com"),
+new artwork("http://www.flickr.com/photos/evencrochets/8404762884","http://farm9.staticflickr.com/8377/8404762884_d7f45fecf3_q.jpg","Kathryn Hedges","http://www.splendidcolors.etsy.com"),
+new artwork("http://www.flickr.com/photos/evencrochets/8404759604","http://farm9.staticflickr.com/8365/8404759604_3e2e5dbe59_q.jpg","Trish Peach","http://www.poppypeach.etsy.com"),
+new artwork("http://www.flickr.com/photos/evencrochets/8403671755","http://farm9.staticflickr.com/8365/8403671755_6eef2288f4_q.jpg","Chris Vardijan","http://www.glowees.etsy.com"),
+new artwork("http://www.flickr.com/photos/evencrochets/8404764144","http://farm9.staticflickr.com/8054/8404764144_accf4d3fe4_q.jpg","Even Howard","http://www.nadene.etsy.com"),
+new artwork("http://www.flickr.com/photos/evencrochets/8404762030","http://farm9.staticflickr.com/8517/8404762030_b96ffb0fdc_q.jpg","Rebecca Saylor","http://www.oodlebadoodle.etsy.com"),
+new artwork("http://www.flickr.com/photos/evencrochets/8404762694","http://farm9.staticflickr.com/8055/8404762694_405774050c_q.jpg","Kathryn Hedges","http://www.splendidcolors.etsy.com"),
+new artwork("http://www.flickr.com/photos/evencrochets/8404762418","http://farm9.staticflickr.com/8084/8404762418_b29cdf5818_q.jpg","Katie Vardijan","http://www.luludeuxmillinery.etsy.com"),
+new artwork("http://www.flickr.com/photos/evencrochets/8403668707","http://farm9.staticflickr.com/8366/8403668707_21e9732d95_q.jpg","Suhita Shirodkar","http://www.sketchaway.etsy.com"),
+new artwork("http://www.flickr.com/photos/katyatchisonillustration/8196275855","http://farm9.staticflickr.com/8065/8196275855_da7dcd2e94_q.jpg","Katy Atchison", "http://www.katyatchisonillustration.com"),
+new artwork("http://www.flickr.com/photos/evencrochets/8403666257","http://farm9.staticflickr.com/8087/8403666257_fe0fafae1c_q.jpg","Yulia Avgustinovich","http://www.augustartstudio.etsy.com"),
+new artwork("http://www.flickr.com/photos/evencrochets/8404761978","http://farm9.staticflickr.com/8362/8404761978_1f0c4801b9_q.jpg","Rebecca Saylor", "http://www.oodlebadoodle.etsy.com"),
+new artwork("http://www.flickr.com/photos/evencrochets/8404762116","http://farm9.staticflickr.com/8327/8404762116_e9b948aee6_q.jpg","Mai and Wayne", "http://www.tofufustudio.etsy.com"),
+new artwork("http://www.flickr.com/photos/evencrochets/8403666833","http://farm9.staticflickr.com/8214/8403666833_19486e2410_q.jpg","Tatiana and Fedor", "http://www.treesandfaces.etsy.com"),
+new artwork("http://www.flickr.com/photos/katyatchisonillustration/8196275525","http://farm9.staticflickr.com/8487/8196275525_203787dfd5_q.jpg","Katy Atchison","http://www.katyatchisonillustration.com")
+];
+
+var SELECT_MONTH_OPTIONS = '<option value="">(Select Month)</option><option value="1">January</option><option value="2">February</option><option value="3">March</option><option value="4">April</option><option value="5">May</option><option value="6">June</option><option value="7">July</option><option value="8">August</option><option value="9">September</option><option value="10">October</option><option value="11">November</option><option value="12">December</option>'
+;
+var MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+var gCalendarMonthImage = [0,0,0,0,0,0,0,0,0,0,0,0];
+
+function setCalendarMonthImage(monthNum, imageNum){
+  gCalendarMonthImage[monthNum] = imageNum;
+}
+
+function artworkPicker(i){
+  var img_url = ARTWORKS[i].thumb_url;
+  var div_image = '<div class="image"><a href="' + img_url +'"><img src="' + img_url + '" width="150" height="150" /></a></div>';
+  var div_month = '<div class="month"><select name="' + (i + 1) + '" onchange="setCalendarMonthImage(this.value, this.name); return false;">' + SELECT_MONTH_OPTIONS + '</select></div>';
+  return '<div class="artwork-picker">' + div_image + div_month + '</div>';
+}
+
+function generateCalendar(){
+  var s = "";
+  for (var month = 0; month < 12; month++){
+    s += '<div class="calendar-page">';
+    s += '<img src="' + artworkURL(gCalendarMonthImage[month]) + '" width="300" height="300">';
+    s += '<br/><font size="24">' + MONTH_NAMES[month] +'</font>';
+    s += '</div>';
+  }
+  e = document.getElementById('calendar');
+  e.innerHTML = s;
+}
+
+</script>
+
+</head>
+
+<body>
+<br/><br/><br/>
+
+<center>
+
+<form method="get" action="foo">
+
+<script>
+  var rows = 7;
+  var cols = 3;
+  for (var row = 0; row < rows; row++){
+    for (var col = 0; col < cols; col++){
+      artworkIndex = (row * cols) + col;
+      document.write(artworkPicker(artworkIndex));
+    };
+    document.write("<br/>");
+  };
+</script>
+
+
+<p><input type="submit" onclick="generateCalendar(); return false;"/>
+
+</form>
+<div id="calendar"></div>
+
+</center>
+</body>
+</html>
