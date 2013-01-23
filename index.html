@@ -3,6 +3,17 @@
 
 <title>SF Etsy 2013 Zoo Calendar</title>
 
+<script type="text/javascript" src="js/jquery/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="js/jquery/jquery-ui-1.8.17.custom.min.js"></script>
+<script type="text/javascript" src="js/jspdf/jspdf.js"></script>
+<script type="text/javascript" src="js/jspdf/libs/FileSaver.js/FileSaver.js"></script>
+<script type="text/javascript" src="js/jspdf/libs/BlobBuilder.js/BlobBuilder.js"></script>
+<script type="text/javascript" src="js/jspdf/jspdf.plugin.addimage.js"></script>
+<script type="text/javascript" src="js/jspdf/jspdf.plugin.standard_fonts_metrics.js"></script>
+<script type="text/javascript" src="js/jspdf/jspdf.plugin.split_text_to_size.js"></script>
+<script type="text/javascript" src="js/jspdf/jspdf.plugin.from_html.js"></script>
+<script type="text/javascript" src="js/sf-etsy-data-url-list.js"></script>
+
 <style>
 
 .artwork-picker {
@@ -71,16 +82,70 @@ function artworkPicker(i){
 }
 
 function generateCalendar(){
-  var s = "";
+  var doc = new jsPDF();
+  doc.setProperties({
+    title: 'SF Etsy 2013 Zoo Calendar',
+    subject: 'This is the subject',
+    author: 'SF Etsy Street Team',
+    keywords: 'OOAK',
+    creator: 'MEEE'
+  });
+
+  doc.setFontSize(60);
+  doc.setFont("times");
+  doc.text(20, 20, 'SF Etsy Calendar');
+
+  var height = 150;
+  var width = 150;
+  var x, y;
+
+  var imgURL, dataURL;
+
+  var gridXMin = 7;
+  var gridYMin = 184;
+  var gridCellWidth = 28;
+  var gridCellHeight = 21;
+  var gridCols = 7; // days per week
+  var gridRows = 5; // weeks per month
+  var gridXMax = gridXMin + gridCols * gridCellWidth;
+  var gridYMax = gridYMin + gridRows * gridCellHeight;
+
   for (var month = 0; month < 12; month++){
-    s += '<div class="calendar-page">';
-    s += '<img src="' + artworkURL(gCalendarMonthImage[month]) + '" width="300" height="300">';
-    s += '<br/><font size="24">' + MONTH_NAMES[month] +'</font>';
-    s += '</div>';
+    doc.addPage();
+    doc.addImage(gBearImageData, 'JPEG', gridXMin, 5, width, height);
+    doc.text(gridXMin, gridYMin - 8, MONTH_NAMES[month]);
+
+    doc.setLineWidth(0.5);
+
+    for (var row = 0; row < 6; row++){
+      y = gridYMin + gridCellHeight * row;
+      doc.line(gridXMin, y, gridXMax, y);
+    }
+
+    for (var col = 0; col < 8; col++){
+      x = gridXMin + gridCellWidth * col;
+      doc.line(x, gridYMin, x, gridYMax);
+    }
+
+    /*
+    imgURL = ARTWORKS[gCalendarMonthImage[month]].thumb_url;
+    //alert("imgURL:" + imgURL);
+    //dataURL = getImageDataURL(imgURL);
+
+    x = 20;
+    y = (height + 20) * (month + 2);
+    alert("addImage x:" + x + " y:" + y + " width:" + width + " height:" + height);
+    //doc.addImage(dataURL, 'JPEG', x, y, width, height);
+    doc.addImage(imgData, 'JPEG', gridXMin, 30, width, height);
+    alert("added x:" + x + " y:" + y);
+    */
   }
-  e = document.getElementById('calendar');
-  e.innerHTML = s;
+
+  doc.save('sf_etsy_calendar.pdf');
 }
+
+
+
 
 </script>
 
@@ -91,11 +156,12 @@ function generateCalendar(){
 
 <center>
 
-<form method="get" action="foo">
+<form onSubmit="generateCalendar(); return false;">
 
 <script>
   var rows = 7;
   var cols = 3;
+  var artworkIndex;
   for (var row = 0; row < rows; row++){
     for (var col = 0; col < cols; col++){
       artworkIndex = (row * cols) + col;
@@ -106,7 +172,7 @@ function generateCalendar(){
 </script>
 
 
-<p><input type="submit" onclick="generateCalendar(); return false;"/>
+<p><input type="submit"/>
 
 </form>
 <div id="calendar"></div>
